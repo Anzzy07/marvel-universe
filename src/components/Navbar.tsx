@@ -12,7 +12,7 @@ export const Navbar = () => {
 
   return (
     <div className="fixed w-full h-[80px] flex justify-between items-center px-6 bg-transparent text-red-500  z-50">
-      <Link to="home" smooth={true} duration={500} className="cursor-pointer">
+      <Link to="/" smooth={true} duration={500} className="cursor-pointer">
         <img
           src={Logo}
           alt="Marvel-Universe"
@@ -23,7 +23,7 @@ export const Navbar = () => {
       {/* Desktop */}
       <div className="hidden md:flex space-x-8">
         <Link
-          to="home"
+          to="/"
           smooth={true}
           duration={500}
           className="hover:text-white transition duration-200 uppercase tracking-wide cursor-pointer font-semibold text-2xl"
@@ -31,7 +31,7 @@ export const Navbar = () => {
           HOME
         </Link>
         <Link
-          to="search"
+          to="/characters"
           smooth={true}
           duration={500}
           className="hover:text-white transition duration-200 uppercase tracking-wide cursor-pointer font-semibold text-2xl"
@@ -39,20 +39,12 @@ export const Navbar = () => {
           CHARACTERS
         </Link>
         <Link
-          to="featured"
+          to="/saved-hero"
           smooth={true}
           duration={500}
           className="hover:text-white transition duration-200 uppercase tracking-wide cursor-pointer font-semibold text-2xl"
         >
-          Heros
-        </Link>
-        <Link
-          to="footer"
-          smooth={true}
-          duration={500}
-          className="hover:text-white transition duration-200 uppercase tracking-wide cursor-pointer font-semibold text-2xl"
-        >
-          FIND US
+          My Heros
         </Link>
       </div>
 
@@ -67,7 +59,7 @@ export const Navbar = () => {
         } transition-transform duration-300`}
       >
         <Link
-          to="home"
+          to="/home"
           smooth={true}
           duration={500}
           className="text-2xl hover:text-white cursor-pointer"
@@ -76,31 +68,22 @@ export const Navbar = () => {
           HOME
         </Link>
         <Link
-          to="search"
+          to="/characters"
           smooth={true}
           duration={500}
           className="text-2xl hover:text-white cursor-pointer"
           onClick={handleClick}
         >
-          FIND CHARACTERS
+          CHARACTERS
         </Link>
         <Link
-          to="featured"
+          to="/saved-hero"
           smooth={true}
           duration={500}
           className="text-2xl hover:text-white cursor-pointer"
           onClick={handleClick}
         >
-          MARVEL CHARACTERS
-        </Link>
-        <Link
-          to="footer"
-          smooth={true}
-          duration={500}
-          className="text-2xl hover:text-white cursor-pointer"
-          onClick={handleClick}
-        >
-          FIND US
+          MY HEROS
         </Link>
       </div>
     </div>

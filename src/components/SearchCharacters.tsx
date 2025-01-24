@@ -1,37 +1,33 @@
 import { FormEvent, useState } from "react";
 import { FiSearch } from "react-icons/fi";
+import { useQuery } from "@tanstack/react-query";
+
 import { getCharacterData } from "../services/marvelAPI";
 
 type CharacterDetails = {
-  thumbnail: any;
+  thumbnail: { path: string; extension: string };
   id: number;
   name: string;
   description: string;
 };
 
 export const SearchCharacters = () => {
-  const [characterName, setCharacterName] = useState<CharacterDetails[]>([]);
-  const [searchCharater, setSearchCharater] = useState<string>("");
+  const [searchCharacter, setSearchCharacter] = useState<string>("");
 
-  const searchHeros = (name: string) => {
-    getCharacterData(name)
-      .then((response) => {
-        setCharacterName(response.data.results);
-        console.log("API Response:", response.data.results);
-      })
-      .catch((err) => {
-        console.error("API Error:", err);
-      });
-  };
+  const { data, isLoading, error, refetch } = useQuery({
+    queryKey: ["characterData", searchCharacter],
+    queryFn: () => getCharacterData(searchCharacter),
+  });
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchCharater(event.target.value);
+    setSearchCharacter(event.target.value);
   };
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    searchHeros(searchCharater);
+    if (searchCharacter.trim()) {
+      refetch();
+    }
   };
 
   return (
@@ -42,7 +38,7 @@ export const SearchCharacters = () => {
           type="search"
           placeholder="Search Characters"
           onChange={handleChange}
-          value={searchCharater}
+          value={searchCharacter}
           className="p-2 rounded text-black"
         />
         <button
@@ -54,10 +50,12 @@ export const SearchCharacters = () => {
         </button>
       </form>
       <div className="mt-4">
-        {characterName.length === 0 ? (
+        {isLoading && <p>Loading...</p>}
+        {error && <p>Error fetching characters. Please try again.</p>}
+        {data?.data?.results.length === 0 ? (
           <p>No characters found. Try a different name!</p>
         ) : (
-          characterName.map((hero) => (
+          data?.data?.results.map((hero: CharacterDetails) => (
             <div key={hero.id} className="p-4 border-b border-gray-700">
               <img
                 src={`${hero.thumbnail.path}.${hero.thumbnail.extension}`}
