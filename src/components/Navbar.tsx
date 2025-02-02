@@ -1,90 +1,58 @@
-import { Link } from "react-scroll";
+import { GiCharacter, GiSwordman } from "react-icons/gi";
+import { FaSearch } from "react-icons/fa";
+import { CgProfile } from "react-icons/cg";
+import { IoMdSettings, IoIosLogOut } from "react-icons/io";
 import Logo from "../assets/Logo.png";
-import { FiMenu, FiX } from "react-icons/fi";
-import { useState } from "react";
 
 export const Navbar = () => {
-  const [nav, setNav] = useState(false);
-
-  const handleClick = () => {
-    setNav(!nav);
-  };
+  const navLinks = [
+    { name: "Characters", icon: GiCharacter },
+    { name: "Search Heroes", icon: FaSearch },
+    { name: "Heroes Profile", icon: CgProfile },
+    { name: "My Heroes", icon: GiSwordman },
+  ];
 
   return (
-    <div className="fixed w-full h-[80px] flex justify-between items-center px-6 bg-transparent text-red-500  z-50">
-      <Link to="/" smooth={true} duration={500} className="cursor-pointer">
+    <div className="px-8 py-5 flex flex-col border-r border-gray-700 w-60 h-screen bg-gray-900 text-white">
+      {/* Logo Section */}
+      <div className="flex flex-col items-center mb-6">
         <img
           src={Logo}
-          alt="Marvel-Universe"
-          className="w-[300px] md:w-[220px]"
+          alt="Marvel Logo"
+          className="w-36 border-2 border-white rounded-md p-2"
         />
-      </Link>
-
-      {/* Desktop */}
-      <div className="hidden md:flex space-x-8">
-        <Link
-          to="/"
-          smooth={true}
-          duration={500}
-          className="hover:text-white transition duration-200 uppercase tracking-wide cursor-pointer font-semibold text-2xl"
-        >
-          HOME
-        </Link>
-        <Link
-          to="/characters"
-          smooth={true}
-          duration={500}
-          className="hover:text-white transition duration-200 uppercase tracking-wide cursor-pointer font-semibold text-2xl"
-        >
-          CHARACTERS
-        </Link>
-        <Link
-          to="/saved-hero"
-          smooth={true}
-          duration={500}
-          className="hover:text-white transition duration-200 uppercase tracking-wide cursor-pointer font-semibold text-2xl"
-        >
-          My Heros
-        </Link>
       </div>
 
-      <div className="md:hidden z-50 cursor-pointer" onClick={handleClick}>
-        {nav ? <FiX size={28} /> : <FiMenu size={28} />}
+      {/* Welcome Message */}
+      <div className="mb-6 text-center">
+        <h3 className="text-sm font-medium text-gray-300">
+          Welcome, Mr. Anzel
+        </h3>
       </div>
 
-      {/* Mobile  */}
-      <div
-        className={`absolute top-0 left-0 w-full h-screen bg-gray-900 flex flex-col items-center justify-center space-y-10 transform ${
-          nav ? "translate-y-0" : "-translate-y-full"
-        } transition-transform duration-300`}
-      >
-        <Link
-          to="/home"
-          smooth={true}
-          duration={500}
-          className="text-2xl hover:text-white cursor-pointer"
-          onClick={handleClick}
-        >
-          HOME
-        </Link>
-        <Link
-          to="/characters"
-          smooth={true}
-          duration={500}
-          className="text-2xl hover:text-white cursor-pointer"
-          onClick={handleClick}
-        >
-          CHARACTERS
-        </Link>
-        <Link
-          to="/saved-hero"
-          smooth={true}
-          duration={500}
-          className="text-2xl hover:text-white cursor-pointer"
-          onClick={handleClick}
-        >
-          MY HEROS
-        </Link>
+      {/* Navigation Links */}
+      <nav className="flex flex-col space-y-3 flex-1">
+        {navLinks.map((link, index) => (
+          <div
+            key={index}
+            className="flex items-center space-x-3 p-2 rounded-md hover:bg-red-600 cursor-pointer transition duration-300"
+          >
+            <link.icon className="w-5 h-5" />
+            <span className="text-sm font-medium">{link.name}</span>
+          </div>
+        ))}
+      </nav>
+
+      {/* Bottom Buttons */}
+      <div className="flex flex-col space-y-2">
+        <button className="flex items-center space-x-3 p-2 rounded-md hover:bg-red-600 transition duration-300">
+          <IoMdSettings className="w-5 h-5" />
+          <span className="text-sm font-medium">Settings</span>
+        </button>
+        <button className="flex items-center space-x-3 p-2 rounded-md hover:bg-red-600 transition duration-300">
+          <IoIosLogOut className="w-5 h-5" />
+          <span className="text-sm font-medium">Logout</span>
+        </button>
       </div>
     </div>
   );

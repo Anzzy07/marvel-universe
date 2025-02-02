@@ -3,8 +3,9 @@ import { FiSearch } from "react-icons/fi";
 import { useQuery } from "@tanstack/react-query";
 
 import { getCharacterData } from "../services/marvelAPI";
+import { CharacterCard } from "./CharacterCard";
 
-type CharacterDetails = {
+export type CharacterDetails = {
   thumbnail: { path: string; extension: string };
   id: number;
   name: string;
@@ -14,7 +15,7 @@ type CharacterDetails = {
 export const SearchCharacters = () => {
   const [searchCharacter, setSearchCharacter] = useState<string>("");
 
-  const { data, isLoading, error, refetch } = useQuery({
+  const { data, isLoading, error } = useQuery({
     queryKey: ["characterData", searchCharacter],
     queryFn: () => getCharacterData(searchCharacter),
   });
@@ -26,7 +27,6 @@ export const SearchCharacters = () => {
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (searchCharacter.trim()) {
-      refetch();
     }
   };
 
@@ -53,20 +53,10 @@ export const SearchCharacters = () => {
         {isLoading && <p>Loading...</p>}
         {error && <p>Error fetching characters. Please try again.</p>}
         {data?.data?.results.length === 0 ? (
-          <p>No characters found. Try a different name!</p>
+          <p>No characters found</p>
         ) : (
-          data?.data?.results.map((hero: CharacterDetails) => (
-            <div key={hero.id} className="p-4 border-b border-gray-700">
-              <img
-                src={`${hero.thumbnail.path}.${hero.thumbnail.extension}`}
-                alt={hero.name}
-                className="mt-2 w-32 h-32 object-cover rounded"
-              />
-              <h1 className="text-xl font-bold">{hero.name}</h1>
-              <p className="text-sm text-gray-400">
-                {hero.description || "No description available."}
-              </p>
-            </div>
+          data?.data?.results.map((heros: CharacterDetails) => (
+            <CharacterCard heros={heros} key={heros.id} />
           ))
         )}
       </div>
