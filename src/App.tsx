@@ -2,10 +2,10 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import { Home } from "./pages/Home";
 import { Layout } from "./components/Layout";
-import { SearchCharacters } from "./components/SearchCharacters";
-import { CharacterProfile } from "./components/CharacterProfile";
-import { FavoriteCharacter } from "./components/FavoriteCharacter";
-import { Settings } from "./components/Settings";
+import { SearchCharacters } from "./pages/SearchCharacters";
+import { CharacterProfile } from "./pages/CharacterProfile";
+import { FavoriteCharacter } from "./pages/FavoriteCharacter";
+import { Settings } from "./pages/Settings";
 
 function App() {
   return (
