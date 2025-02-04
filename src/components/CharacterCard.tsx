@@ -1,4 +1,4 @@
-import { CharacterDetails } from "./SearchCharacters";
+import { CharacterDetails } from "../pages/SearchCharacters";
 
 type CharacterCardDetails = {
   heros: CharacterDetails;
