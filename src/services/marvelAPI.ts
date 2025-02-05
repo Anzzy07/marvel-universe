@@ -10,9 +10,10 @@ export const generateHash = () => {
 
 export const getCharacterData = async (name: string) => {
   const hash = generateHash();
+  const nameQuery = name ? `name=${name}&` : "";
 
   const response = await fetch(
-    `https://gateway.marvel.com/v1/public/characters?name=${name}&ts=${ts}&apikey=${publicKey}&hash=${hash}`
+    `https://gateway.marvel.com/v1/public/characters?${nameQuery}&ts=${ts}&apikey=${publicKey}&hash=${hash}`
   );
   if (!response.ok) throw new Error("Error fetching data");
   return response.json();

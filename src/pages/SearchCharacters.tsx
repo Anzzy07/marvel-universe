@@ -4,13 +4,8 @@ import { FiSearch } from "react-icons/fi";
 import { getCharacterData } from "../services/marvelAPI";
 import { CharacterCard } from "../components/CharacterCard";
 import { Loader } from "../components/Loading";
-
-export type CharacterDetails = {
-  thumbnail: { path: string; extension: string };
-  id: number;
-  name: string;
-  description: string;
-};
+import { RecommendCharacter } from "../components/RecommendCharacter";
+import type { CharacterDetails } from "../types/Characters";
 
 export const SearchCharacters = () => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -115,11 +110,12 @@ export const SearchCharacters = () => {
         </div>
       ) : (
         <div className="movies-grid">
-          {searchCharacter?.map((hero) => (
-            <CharacterCard heros={hero} key={hero.id} />
+          {searchCharacter?.map((heros) => (
+            <CharacterCard heros={heros} key={heros.id} />
           ))}
         </div>
       )}
+      <RecommendCharacter />
     </div>
   );
 };
