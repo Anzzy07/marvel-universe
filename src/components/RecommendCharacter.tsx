@@ -24,7 +24,7 @@ export const RecommendCharacter = () => {
               character.thumbnail &&
               !character.thumbnail.path.includes("image_not_available")
           )
-          .slice(0, 6); // displaying 6 characters
+          .slice(0, 8); // displaying 6 characters
 
         setRecommendCharacter(filteredCharacters);
       } catch (error) {
@@ -39,17 +39,23 @@ export const RecommendCharacter = () => {
   }, []);
 
   return (
-    <div>
-      <h2>Recommended Heroes</h2>
-      <span>Heroes you might not know?</span>
+    <div className="container mx-auto p-4 mt-8">
+      <h2 className="text-2xl font-bold mb-2">Recommended Heroes</h2>
+      <span className="text-gray-500 mb-4 block">
+        Heroes you might not know?
+      </span>
+
       {loading && <Loader />}
-      {error && <p className="error-message">{error}</p>}
+      {error && <p className="text-red-500 mt-2">{error}</p>}
       {!loading && recommendCharacter.length === 0 && (
-        <p>No characters found.</p>
+        <p className="text-center text-gray-500">No characters found.</p>
       )}
-      {recommendCharacter.map((hero, id) => (
-        <CharacterCard heros={hero} key={id} />
-      ))}
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {recommendCharacter.map((hero, id) => (
+          <CharacterCard heros={hero} key={id} />
+        ))}
+      </div>
     </div>
   );
 };

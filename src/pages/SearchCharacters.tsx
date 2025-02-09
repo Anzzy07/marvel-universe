@@ -59,19 +59,23 @@ export const SearchCharacters = () => {
   };
 
   return (
-    <div className="">
-      <form onSubmit={handleSearch} className="">
+    <div className="container mx-auto p-4">
+      <form onSubmit={handleSearch} className="flex items-center">
         <input
           type="text"
           placeholder="Marvel characters..."
-          className=""
+          className="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500" // Tailwind input styling
           value={searchTerm}
           ref={inputRef}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             setSearchTerm(e.target.value)
           }
         />
-        <button type="submit" className="search-button" disabled={loading}>
+        <button
+          type="submit"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md ml-2" // Tailwind button styling
+          disabled={loading}
+        >
           {loading ? (
             "Searching..."
           ) : (
@@ -81,17 +85,17 @@ export const SearchCharacters = () => {
           )}
         </button>
       </form>
-
-      {/* Displaying recent searches */}
+      {/* Recent Searches */}
       {recentSearch.length > 0 && (
-        <div className="recent-searches">
-          <h3>Recent Searches:</h3>
-          <ul>
+        <div className="mt-4">
+          {" "}
+          <h3 className="text-lg font-bold mb-2">Recent Searches:</h3>{" "}
+          <ul className="border border-gray-300 rounded-md">
             {recentSearch.map((search, index) => (
               <li
                 key={index}
                 onClick={() => setSearchTerm(search)}
-                className="recent-search-item"
+                className="px-3 py-2 hover:bg-gray-100 cursor-pointer" // Tailwind list item styling
               >
                 {search}
               </li>
@@ -99,17 +103,16 @@ export const SearchCharacters = () => {
           </ul>
         </div>
       )}
-
-      {/* Displaying search results */}
-      {error && <div className="error-message">{error}</div>}
+      {/* Search Results */}
+      {error && <div className="text-red-500 mt-2">{error}</div>}{" "}
       {loading ? (
         <Loader />
       ) : searchCharacter?.length === 0 ? (
-        <div>
+        <div className="mt-4 text-center">
           {searchTerm ? "No character found." : "Search Your Super Heroes :)"}
         </div>
       ) : (
-        <div className="movies-grid">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
           {searchCharacter?.map((heros) => (
             <CharacterCard heros={heros} key={heros.id} />
           ))}
