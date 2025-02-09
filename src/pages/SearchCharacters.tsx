@@ -30,10 +30,18 @@ export const SearchCharacters = () => {
     const updatedSearch = [
       searched,
       ...recentSearch.filter((search) => search !== searched),
-    ].slice(0, 5);
+    ].slice(0, 5); // Keeping only 5 latest searches
 
     setRecentSearch(updatedSearch);
     localStorage.setItem("recentSearch", JSON.stringify(updatedSearch));
+  };
+
+  const deleteSearchCharacters = (searchToDelete: string) => {
+    const updatedSearch = recentSearch.filter(
+      (search) => search !== searchToDelete
+    );
+    setRecentSearch(updatedSearch);
+    localStorage.setItem("recentSearch", JSON.stringify(updatedSearch)); // Deleting recent searches
   };
 
   const handleSearch = async (event: FormEvent<HTMLFormElement>) => {
@@ -68,7 +76,7 @@ export const SearchCharacters = () => {
           value={searchTerm}
           ref={inputRef}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setSearchTerm(e.target.value)
+            setSearchTerm(e.target.value.toUpperCase())
           }
         />
         <button
@@ -88,16 +96,20 @@ export const SearchCharacters = () => {
       {/* Recent Searches */}
       {recentSearch.length > 0 && (
         <div className="mt-4">
-          {" "}
-          <h3 className="text-lg font-bold mb-2">Recent Searches:</h3>{" "}
+          <h3 className="text-lg font-bold mb-2">Recent Searches:</h3>
           <ul className="border border-gray-300 rounded-md">
             {recentSearch.map((search, index) => (
               <li
                 key={index}
-                onClick={() => setSearchTerm(search)}
-                className="px-3 py-2 hover:bg-gray-100 cursor-pointer" // Tailwind list item styling
+                className="px-3 py-2 flex justify-between items-center hover:bg-gray-100 cursor-pointer"
               >
-                {search}
+                <span onClick={() => setSearchTerm(search)}>{search}</span>
+                <button
+                  onClick={() => deleteSearchCharacters(search)}
+                  className="text-red-500 hover:text-red-700 ml-2"
+                >
+                  ❌
+                </button>
               </li>
             ))}
           </ul>

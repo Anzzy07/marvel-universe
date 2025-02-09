@@ -24,9 +24,6 @@ export const CharacterCard = ({ heros }: CharacterCardDetails) => {
       </div>
       <div className="p-4 flex-1 flex flex-col gap-2">
         <h3 className="text-xl font-bold truncate">{heros.name}</h3>
-        <p className="text-sm text-gray-400 line-clamp-3">
-          {heros.description || "No description available."}
-        </p>
       </div>
     </div>
   );

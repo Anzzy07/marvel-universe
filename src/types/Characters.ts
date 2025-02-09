@@ -3,9 +3,4 @@ export type CharacterDetails = {
   id: number;
   name: string;
   description: string;
-  comics: {
-    items: {
-      name: string;
-    };
-  };
 };

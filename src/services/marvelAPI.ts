@@ -15,6 +15,21 @@ export const getCharacterData = async (name: string) => {
   const response = await fetch(
     `https://gateway.marvel.com/v1/public/characters?${nameQuery}&ts=${ts}&apikey=${publicKey}&hash=${hash}`
   );
-  if (!response.ok) throw new Error("Error fetching data");
+  return response.json();
+};
+
+export const characterInfo = async (id: number) => {
+  const hash = generateHash();
+  const response = await fetch(
+    `https://gateway.marvel.com/v1/public/characters/${id}/comics?ts=${ts}&apikey=${publicKey}&hash=${hash}`
+  );
+  return response.json();
+};
+
+export const getComics = async (id: string) => {
+  const hash = generateHash();
+  const response = await fetch(
+    `https://gateway.marvel.com/v1/public/characters/${id}/comics?ts=${ts}&apikey=${publicKey}&hash=${hash}`
+  );
   return response.json();
 };
