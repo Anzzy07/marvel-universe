@@ -8,12 +8,16 @@ export const generateHash = () => {
   return CryptoJS.MD5(ts + privateKey + publicKey).toString();
 };
 
-export const getCharacterData = async (name: string) => {
+export const getCharacterData = async (
+  name: string,
+  offset = 0,
+  limit = 20
+) => {
   const hash = generateHash();
   const nameQuery = name ? `name=${name}&` : "";
 
   const response = await fetch(
-    `https://gateway.marvel.com/v1/public/characters?${nameQuery}&ts=${ts}&apikey=${publicKey}&hash=${hash}`
+    `https://gateway.marvel.com/v1/public/characters?${nameQuery}limit=${limit}&offset=${offset}&ts=${ts}&apikey=${publicKey}&hash=${hash}`
   );
   return response.json();
 };
@@ -30,6 +34,14 @@ export const getComicsForCharacters = async (characterID: string) => {
   const hash = generateHash();
   const response = await fetch(
     `https://gateway.marvel.com/v1/public/characters/${characterID}/comics?ts=${ts}&apikey=${publicKey}&hash=${hash}`
+  );
+  return response.json();
+};
+
+export const getSeries = async (id: string) => {
+  const hash = generateHash();
+  const response = await fetch(
+    `https://gateway.marvel.com/v1/public/characters/${id}/series?seriesType=collection&ts=${ts}&apikey=${publicKey}&hash=${hash}`
   );
   return response.json();
 };

@@ -28,5 +28,5 @@ const containerStyle = {
   alignItems: "center",
   justifyContent: "center",
   minHeight: "100vh",
-  backgroundColor: "#000000",
+  backgroundColor: "#ffffff",
 };
