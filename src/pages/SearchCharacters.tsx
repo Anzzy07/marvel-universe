@@ -93,6 +93,23 @@ export const SearchCharacters = () => {
           )}
         </button>
       </form>
+
+      {/* Search Results */}
+      {error && <div className="text-red-500 mt-2">{error}</div>}
+      {loading ? (
+        <Loader />
+      ) : searchCharacter?.length === 0 ? (
+        <div className="mt-4 text-center">
+          {searchTerm ? "No character found." : "Search Your Super Heroes :)"}
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
+          {searchCharacter?.map((heros) => (
+            <CharacterCard heros={heros} key={heros.id} />
+          ))}
+        </div>
+      )}
+
       {/* Recent Searches */}
       {recentSearch.length > 0 && (
         <div className="mt-4">
@@ -115,21 +132,7 @@ export const SearchCharacters = () => {
           </ul>
         </div>
       )}
-      {/* Search Results */}
-      {error && <div className="text-red-500 mt-2">{error}</div>}{" "}
-      {loading ? (
-        <Loader />
-      ) : searchCharacter?.length === 0 ? (
-        <div className="mt-4 text-center">
-          {searchTerm ? "No character found." : "Search Your Super Heroes :)"}
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
-          {searchCharacter?.map((heros) => (
-            <CharacterCard heros={heros} key={heros.id} />
-          ))}
-        </div>
-      )}
+
       <RecommendCharacter />
     </div>
   );

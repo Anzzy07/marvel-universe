@@ -15,7 +15,7 @@ export const RecommendCharacter = () => {
     const fetchRecommendedHeroes = async () => {
       setLoading(true);
       try {
-        const response = await getCharacterData();
+        const response = await getCharacterData("");
 
         //Filtering the characters that doesn't have any images
         const filteredCharacters = response.data?.results

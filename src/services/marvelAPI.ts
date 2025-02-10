@@ -21,15 +21,23 @@ export const getCharacterData = async (name: string) => {
 export const characterInfo = async (id: number) => {
   const hash = generateHash();
   const response = await fetch(
-    `https://gateway.marvel.com/v1/public/characters/${id}/comics?ts=${ts}&apikey=${publicKey}&hash=${hash}`
+    `https://gateway.marvel.com/v1/public/characters/${id}?ts=${ts}&apikey=${publicKey}&hash=${hash}`
   );
   return response.json();
 };
 
-export const getComics = async (id: string) => {
+export const getComicsForCharacters = async (characterID: string) => {
   const hash = generateHash();
   const response = await fetch(
-    `https://gateway.marvel.com/v1/public/characters/${id}/comics?ts=${ts}&apikey=${publicKey}&hash=${hash}`
+    `https://gateway.marvel.com/v1/public/characters/${characterID}/comics?ts=${ts}&apikey=${publicKey}&hash=${hash}`
+  );
+  return response.json();
+};
+
+export const showComics = async () => {
+  const hash = generateHash();
+  const response = await fetch(
+    `https://gateway.marvel.com/v1/public/comics?ts=${ts}&apikey=${publicKey}&hash=${hash}`
   );
   return response.json();
 };
