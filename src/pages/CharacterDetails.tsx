@@ -6,6 +6,7 @@ import {
   getSeries,
 } from "../services/marvelAPI";
 import { CharacterDetails as CharacterType } from "../types/Characters";
+import { useCharacterContext } from "../context/SavedCharacters";
 import { Loader } from "../components/Loading";
 
 export const CharacterDetails = () => {
@@ -16,6 +17,9 @@ export const CharacterDetails = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
+  const { addToFavorite, removeFromFavorites, isFavorite } =
+    useCharacterContext();
+
   useEffect(() => {
     const fetchCharacter = async () => {
       setLoading(true);
@@ -24,7 +28,7 @@ export const CharacterDetails = () => {
       try {
         const response = await characterInfo(Number(id));
         if (response.data.results.length > 0) {
-          setCharacter(response.data.results[0]); // Marvel API returns an array
+          setCharacter(response.data.results[0]);
         } else {
           setError("Character not found.");
         }
@@ -56,12 +60,22 @@ export const CharacterDetails = () => {
   if (!character)
     return <p className="text-gray-500">No character data available.</p>;
 
+  const favorite = isFavorite(character.id);
+
+  const likeToFavorite = () => {
+    if (favorite) {
+      removeFromFavorites(character.id);
+    } else {
+      addToFavorite(character);
+    }
+  };
+
   return (
     <div className="p-5 max-w-3xl mx-auto bg-white shadow-lg rounded-lg">
       <Link to="/character-details">
         <span>← Go Back</span>
       </Link>
-      <div className="flex items-center space-x-5">
+      <div className="flex items-center space-x-5 relative">
         <img
           src={`${character.thumbnail.path}.${character.thumbnail.extension}`}
           alt={character.name}
@@ -73,6 +87,14 @@ export const CharacterDetails = () => {
             {character.description || "No description available."}
           </p>
         </div>
+
+        <button
+          className={`absolute top-4 right-4 text-white text-xl p-2 rounded-full w-10 h-10 flex items-center justify-center transition duration-200 
+              ${favorite ? "bg-black/50" : "bg-black/50 hover:bg-red-500"}`}
+          onClick={likeToFavorite}
+        >
+          {favorite ? "❤️" : "🤍"}
+        </button>
       </div>
 
       <div className="mt-5">

@@ -7,21 +7,24 @@ import { CharacterProfile } from "./pages/CharacterProfile";
 import { FavoriteCharacter } from "./pages/FavoriteCharacter";
 import { Settings } from "./pages/Settings";
 import { CharacterDetails } from "./pages/CharacterDetails";
+import { CharacterProvider } from "./context/SavedCharacters";
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="search-characters" element={<SearchCharacters />} />
-          <Route path="character-details" element={<CharacterProfile />} />
-          <Route path="/characters/:id" element={<CharacterDetails />} />
-          <Route path="saved-characters" element={<FavoriteCharacter />} />
-          <Route path="settings" element={<Settings />} />
-        </Route>
-      </Routes>
-    </Router>
+    <CharacterProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path="search-characters" element={<SearchCharacters />} />
+            <Route path="character-details" element={<CharacterProfile />} />
+            <Route path="/characters/:id" element={<CharacterDetails />} />
+            <Route path="saved-characters" element={<FavoriteCharacter />} />
+            <Route path="settings" element={<Settings />} />
+          </Route>
+        </Routes>
+      </Router>
+    </CharacterProvider>
   );
 }
 
